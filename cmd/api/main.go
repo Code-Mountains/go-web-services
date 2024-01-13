@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/v1/healthcheck", healthcheck)
-
-	err := http.ListenAndServe(":8000", nil)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/v1/healthcheck", healthcheck)
+	err := http.ListenAndServe(":8000", mux)
 
 	if err != nil {
 		fmt.Println(err)
