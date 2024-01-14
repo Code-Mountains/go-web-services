@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 const version = "0.0.1"
@@ -37,26 +38,18 @@ func main() {
 
 	addr := fmt.Sprintf(":%d", cfg.port)
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/healthcheck", app.healthcheck)
-
-	logger.Printf("starting %s server on %s", cfg.env, addr)
-
-	err := http.ListenAndServe(addr, mux)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-}
-
-func healthcheck(w http.ResponseWriter, r *http.Request) {
-
-	if r.Method != http.MethodGet {
-		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
-		return
+	srv := &http.Server{
+		Addr:         addr,
+		Handler:      app.route(),
+		IdleTimeout:  time.Minute,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 30 * time.Second,
 	}
 
-	fmt.Fprintln(w, "status: available")
-	fmt.Fprintf(w, "env: %s\n", cfg.env)
-	fmt.Fprintf(w, "version: %s\n", version)
+	logger.Printf("starting %s server on port %s", cfg.env, addr)
+
+	err := srv.ListenAndServe()
+
+	logger.Fatal(err)
+
 }
