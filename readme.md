@@ -29,3 +29,17 @@ ooks/1
 ```
 Delete a book with ID: 1
 ```
+
+$ curl localhost:8000/v1/healthcheck
+```
+{"environment":"dev","status":"available","version":"0.0.1"}
+```
+
+$ curl localhost:8000/v1/healthcheck | jq
+```
+{
+  "environment": "dev",
+  "status": "available",
+  "version": "0.0.1"
+}
+```
