@@ -107,7 +107,7 @@ $ curl localhost:8000/v1/books
 ]
 ```
 
-## Testing all endppoints at once using bash script
+## Testing all endpoints at once using bash script
 ```
 $ ./test-endpoints.sh 
 curl localhost:8000/v1/healthcheck

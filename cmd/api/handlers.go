@@ -22,7 +22,7 @@ func (app *application) healthcheck(w http.ResponseWriter, r *http.Request) {
 		"version":     version,
 	}
 
-	if err := app.writeJSON(w, http.StatusOK, data); err != nil {
+	if err := app.writeJSON(w, http.StatusOK, envelope{"data": data}); err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
@@ -53,7 +53,7 @@ func (app *application) getCreateBooksHandler(w http.ResponseWriter, r *http.Req
 			},
 		}
 
-		if err := app.writeJSON(w, http.StatusOK, books); err != nil {
+		if err := app.writeJSON(w, http.StatusOK, envelope{"books": books}); err != nil {
 			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 			return
 		}
@@ -95,7 +95,7 @@ func (app *application) getBook(w http.ResponseWriter, r *http.Request) {
 		Version:   1,
 	}
 
-	if err := app.writeJSON(w, http.StatusOK, book); err != nil {
+	if err := app.writeJSON(w, http.StatusOK, envelope{"book": book}); err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
