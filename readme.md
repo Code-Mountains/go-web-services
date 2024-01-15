@@ -1,5 +1,7 @@
-$ go run ./cmd/api
-
+$ go run ./cmd/api/
+```
+2024/01/14 17:48:52 starting dev server on port :8000
+```
 
 $ curl localhost:8000/v1/healthcheck
 ```
@@ -42,4 +44,36 @@ $ curl localhost:8000/v1/healthcheck | jq
   "status": "available",
   "version": "0.0.1"
 }
+```
+
+$ curl localhost:8000/v1/books | jq
+```
+[
+  {
+    "ID": 1,
+    "CreatedAt": "2024-01-14T18:18:25.784315425-06:00",
+    "Title": "The Darkening of Tristram",
+    "Published": 1998,
+    "Pages": 310,
+    "Genres": [
+      "Fiction",
+      "Thriller"
+    ],
+    "Rating": 4.8,
+    "Version": 1
+  },
+  {
+    "ID": 2,
+    "CreatedAt": "2024-01-14T18:18:25.784315475-06:00",
+    "Title": "The Legacy of Deckard Cain",
+    "Published": 2007,
+    "Pages": 432,
+    "Genres": [
+      "Fiction",
+      "Adventure"
+    ],
+    "Rating": 4.4,
+    "Version": 1
+  }
+]
 ```
