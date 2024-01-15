@@ -77,3 +77,85 @@ $ curl localhost:8000/v1/books | jq
   }
 ]
 ```
+
+## json.MarshalIndent()
+```
+$ curl localhost:8000/v1/books
+[
+        {
+                "id": 1,
+                "title": "The Darkening of Tristram",
+                "published": 1998,
+                "pages": 310,
+                "genres": [
+                        "Fiction",
+                        "Thriller"
+                ],
+                "rating": 4.8
+        },
+        {
+                "id": 2,
+                "title": "The Legacy of Deckard Cain",
+                "published": 2007,
+                "pages": 432,
+                "genres": [
+                        "Fiction",
+                        "Adventure"
+                ],
+                "rating": 4.4
+        }
+]
+```
+
+## Testing all endppoints at once using bash script
+```
+$ ./test-endpoints.sh 
+curl localhost:8000/v1/healthcheck
+
+{
+        "environment": "dev",
+        "status": "available",
+        "version": "0.0.1"
+}
+
+curl localhost:8000/v1/books/1
+
+{
+        "id": 1,
+        "title": "Echoes in the Darkness",
+        "published": 2019,
+        "pages": 300,
+        "genres": [
+                "Fiction",
+                "Thriller"
+        ],
+        "rating": 4.5
+}
+
+curl localhost:8000/v1/books
+
+[
+        {
+                "id": 1,
+                "title": "The Darkening of Tristram",
+                "published": 1998,
+                "pages": 310,
+                "genres": [
+                        "Fiction",
+                        "Thriller"
+                ],
+                "rating": 4.8
+        },
+        {
+                "id": 2,
+                "title": "The Legacy of Deckard Cain",
+                "published": 2007,
+                "pages": 432,
+                "genres": [
+                        "Fiction",
+                        "Adventure"
+                ],
+                "rating": 4.4
+        }
+]
+```

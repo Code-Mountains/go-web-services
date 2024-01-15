@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -23,19 +22,10 @@ func (app *application) healthcheck(w http.ResponseWriter, r *http.Request) {
 		"version":     version,
 	}
 
-	js, err := json.Marshal(data)
-
-	if err != nil {
+	if err := app.writeJSON(w, http.StatusOK, data); err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
-
-	js = append(js, '\n')
-
-	w.Header().Set("Content-Type", "application/json")
-
-	w.Write(js)
-
 }
 
 func (app *application) getCreateBooksHandler(w http.ResponseWriter, r *http.Request) {
@@ -63,18 +53,10 @@ func (app *application) getCreateBooksHandler(w http.ResponseWriter, r *http.Req
 			},
 		}
 
-		js, err := json.Marshal(books)
-
-		if err != nil {
+		if err := app.writeJSON(w, http.StatusOK, books); err != nil {
 			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 			return
 		}
-
-		js = append(js, '\n')
-
-		w.Header().Set("Content-Type", "application/json")
-
-		w.Write(js)
 	}
 
 	if r.Method == http.MethodPost {
@@ -113,18 +95,10 @@ func (app *application) getBook(w http.ResponseWriter, r *http.Request) {
 		Version:   1,
 	}
 
-	js, err := json.Marshal(book)
-
-	if err != nil {
+	if err := app.writeJSON(w, http.StatusOK, book); err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
-
-	js = append(js, '\n')
-
-	w.Header().Set("Content-Type", "application/json")
-
-	w.Write(js)
 
 }
 
