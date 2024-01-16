@@ -159,3 +159,17 @@ curl localhost:8000/v1/books
         }
 ]
 ```
+
+## POST request using custom BODY
+```
+BODY='{"title":"The Black Soulstone","published":2001,"pages":207,"genres":["Fiction","Mystery"],"rating":3.5}'
+
+curl -i -d "$BODY" localhost:8000/v1/books
+
+HTTP/1.1 200 OK
+Date: Tue, 16 Jan 2024 00:49:31 GMT
+Content-Length: 53
+Content-Type: text/plain; charset=utf-8
+
+{The Black Soulstone 2001 207 [Fiction Mystery] 3.5}
+```
