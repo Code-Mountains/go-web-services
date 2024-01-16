@@ -169,3 +169,86 @@ Content-Type: text/plain; charset=utf-8
 
 {The Black Soulstone 2001 207 [Fiction Mystery] 3.5}
 ```
+
+
+# Using Postgres SQL Backend
+## Create New Book Record
+```
+$ BODY='{"title":"The Black Soulstone","published":2001,"pages":207,"genres":["Fiction","Mystery"],"rating":3.5}'
+echo -e '\ncurl -i -d "$BODY" localhost:8000/v1/books\n'
+curl -i -d "$BODY" localhost:8000/v1/books
+
+curl -i -d "$BODY" localhost:8000/v1/books
+
+HTTP/1.1 201 Created
+Content-Type: application/json
+Location: v1/books/1
+Date: Tue, 16 Jan 2024 22:15:02 GMT
+Content-Length: 164
+
+{
+        "book": {
+                "id": 1,
+                "title": "The Black Soulstone",
+                "published": 2001,
+                "pages": "207",
+                "genres": [
+                        "Fiction",
+                        "Mystery"
+                ],
+                "rating": 3.5
+        }
+}
+```
+
+## GET All Book Records
+```
+$ curl localhost:8000/v1/books
+{
+        "books": [
+                {
+                        "id": 1,
+                        "title": "The Black Soulstone",
+                        "published": 2001,
+                        "pages": "207",
+                        "genres": [
+                                "Fiction",
+                                "Mystery"
+                        ],
+                        "rating": 3.5
+                }
+        ]
+}
+```
+
+
+## Update One Book Record
+```
+$ curl localhost:8000/v1/books
+{
+        "books": [
+                {
+                        "id": 1,
+                        "title": "The Black Soulstone",
+                        "published": 2001,
+                        "pages": "207",
+                        "genres": [
+                                "Fiction",
+                                "Mystery"
+                        ],
+                        "rating": 3.5
+                },
+                {
+                        "id": 2,
+                        "title": "Echoes in the Darkness",
+                        "published": 2019,
+                        "pages": "300",
+                        "genres": [
+                                "Fiction",
+                                "Thriller"
+                        ],
+                        "rating": 4.3
+                }
+        ]
+}
+```
