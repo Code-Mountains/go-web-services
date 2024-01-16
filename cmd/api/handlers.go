@@ -71,14 +71,7 @@ func (app *application) getCreateBooksHandler(w http.ResponseWriter, r *http.Req
 			Rating    float64  `json:"rating"`
 		}
 
-		body, err := ioutil.ReadAll(r.Body)
-
-		if err != nil {
-			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
-			return
-		}
-
-		err = json.Unmarshal(body, &input)
+		err := app.readJSON(w, r, &input)
 
 		if err != nil {
 			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
