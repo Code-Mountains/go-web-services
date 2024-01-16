@@ -11,3 +11,6 @@ curl localhost:8000/v1/books
 BODY='{"title":"The Black Soulstone","published":2001,"pages":207,"genres":["Fiction","Mystery"],"rating":3.5}'
 echo -e '\ncurl -i -d "$BODY" localhost:8000/v1/books\n'
 curl -i -d "$BODY" localhost:8000/v1/books
+
+BODY='{"title":"Echoes in the Darkness","published":2019,"pages":300,"genres":["Fiction","Thriller"],"rating":4.3}'
+curl -X PUT -d "$BODY" localhost:8000/v1/books/121
