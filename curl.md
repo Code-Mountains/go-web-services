@@ -201,7 +201,7 @@ Content-Length: 164
 }
 ```
 
-## GET All Book Records
+## Read / GET All Book Records
 ```
 $ curl localhost:8000/v1/books
 {
@@ -248,6 +248,80 @@ $ curl localhost:8000/v1/books
                                 "Thriller"
                         ],
                         "rating": 4.3
+                }
+        ]
+}
+
+$ BODY='{"title":"Echoes in the Darkness","published":2019,"pages":310,"genres":["Fiction","Thriller"],"rating":4.1}'
+echo -e '\ncurl -X PUT -d "$BODY" localhost:8000/v1/books/2\n'
+curl -X PUT -d "$BODY" localhost:8000/v1/books/2
+
+curl -X PUT -d "$BODY" localhost:8000/v1/books/2
+
+{
+        "book": {
+                "id": 2,
+                "title": "Echoes in the Darkness",
+                "published": 2019,
+                "pages": "310",
+                "genres": [
+                        "Fiction",
+                        "Thriller"
+                ],
+                "rating": 4.1
+        }
+}
+
+$ curl localhost:8000/v1/books
+{
+        "books": [
+                {
+                        "id": 1,
+                        "title": "The Black Soulstone",
+                        "published": 2001,
+                        "pages": "207",
+                        "genres": [
+                                "Fiction",
+                                "Mystery"
+                        ],
+                        "rating": 3.5
+                },
+                {
+                        "id": 2,
+                        "title": "Echoes in the Darkness",
+                        "published": 2019,
+                        "pages": "310",
+                        "genres": [
+                                "Fiction",
+                                "Thriller"
+                        ],
+                        "rating": 4.1
+                }
+        ]
+}
+
+```
+
+## Delete One Book Record
+```
+$ curl -X DELETE localhost:8000/v1/books/2
+{
+        "message": "book successfully deleted"
+}
+
+$ curl localhost:8000/v1/books
+{
+        "books": [
+                {
+                        "id": 1,
+                        "title": "The Black Soulstone",
+                        "published": 2001,
+                        "pages": "207",
+                        "genres": [
+                                "Fiction",
+                                "Mystery"
+                        ],
+                        "rating": 3.5
                 }
         ]
 }
