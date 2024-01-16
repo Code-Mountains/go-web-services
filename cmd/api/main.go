@@ -1,12 +1,15 @@
 package main
 
 import (
+	"database/sql"
 	"flag"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	_ "github.com/lib/pq"
 )
 
 const version = "0.0.1"
@@ -14,6 +17,7 @@ const version = "0.0.1"
 type config struct {
 	port int
 	env  string
+	dsn  string
 }
 
 type application struct {
@@ -27,6 +31,7 @@ func main() {
 
 	flag.IntVar(&cfg.port, "port", 8000, "API Server Port")
 	flag.StringVar(&cfg.env, "env", "dev", "Environment (dev|stage|prod)")
+	flag.StringVar(&cfg.dsn, "db-dsn", os.Getenv("READINGLIST_DB_DSN"), "PostgreSQL DSN")
 	flag.Parse()
 
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
@@ -35,6 +40,22 @@ func main() {
 		config: cfg,
 		logger: logger,
 	}
+
+	db, err := sql.Open("postgres", cfg.dsn)
+
+	if err != nil {
+		logger.Fatal(err)
+	}
+
+	defer db.Close()
+
+	err = db.Ping()
+
+	if err != nil {
+		logger.Fatal(err)
+	}
+
+	logger.Printf("Database connection pool established")
 
 	addr := fmt.Sprintf(":%d", cfg.port)
 
@@ -48,7 +69,7 @@ func main() {
 
 	logger.Printf("starting %s server on port %s", cfg.env, addr)
 
-	err := srv.ListenAndServe()
+	err = srv.ListenAndServe()
 
 	logger.Fatal(err)
 

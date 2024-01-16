@@ -1,3 +1,5 @@
+## Commands:
+```
 CREATE DATABASE readinglist;
 
 CREATE ROLE readinglist WITH LOGIN PASSWORD 'pa55w0rd';
@@ -18,8 +20,9 @@ CREATE TABLE IF NOT EXISTS books (
 GRANT SELECT, INSERT, UPDATE, DELETE on books TO readinglist;
 
 GRANT USAGE, SELECT on SEQUENCE books_id_seq TO readinglist;
+```
 
-## OUTPUT:
+## With Output:
 ```
 postgres=# CREATE DATABASE readinglist;
 CREATE DATABASE
@@ -50,4 +53,15 @@ GRANT
 
 readinglist=# GRANT USAGE, SELECT on SEQUENCE books_id_seq TO readinglist;
 GRANT
+```
+
+## Connection String / DSN for Go app to connect to Postgres
+```
+export READINGLIST_DB_DSN='postgres://readinglist:pa55w0rd@localhost/readinglist?sslmode=disable'
+```
+
+
+## Export PSQL password to .bashrc for psql cli access without pwd prompt
+```
+export PGPASSWORD='mysecretpassword' >> .bashrc
 ```
