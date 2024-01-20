@@ -9,7 +9,7 @@ import (
 )
 
 type application struct {
-	readlinglist *models.ReadinglistModel
+	readinglist *models.ReadinglistModel
 }
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 	endpoint := flag.String("endpoint", "http://localhost:4000/v1/books", "Endpoint for the readinglist web service")
 
 	app := &application{
-		readlinglist: &models.ReadinglistModel{
+		readinglist: &models.ReadinglistModel{
 			Endpoint: *endpoint,
 		},
 	}
